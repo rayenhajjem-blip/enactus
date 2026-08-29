@@ -182,16 +182,62 @@ function initTabs(tabSelector, panelSelector) {
   });
 }
 initTabs('.dept-tabs button', '.team-panel');
+// ===== EmailJS Contact Form =====
 
-// ===== Contact form (static demo — no backend) =====
-const contactForm = document.getElementById('contact-form');
+const contactForm = document.getElementById("contact-form");
+
 if (contactForm) {
-  contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = contactForm.querySelector('button[type="submit"]');
-    const original = btn.textContent;
-    btn.textContent = 'Message envoyé ✓';
-    btn.disabled = true;
-    setTimeout(() => { btn.textContent = original; btn.disabled = false; contactForm.reset(); }, 2600);
-  });
+
+    contactForm.addEventListener("submit", function(e) {
+
+        e.preventDefault();
+
+        const btn = contactForm.querySelector("button[type='submit']");
+        const originalText = btn.textContent;
+
+        btn.disabled = true;
+        btn.textContent = "Sending...";
+
+        emailjs.send("service_vuy642u", "template_39u6cu9", {
+
+            first_name: document.getElementById("fname").value,
+
+            last_name: document.getElementById("lname").value,
+
+            email: document.getElementById("email").value,
+
+            department: document.getElementById("dept").value,
+
+            message: document.getElementById("message").value
+
+        })
+
+        .then(function () {
+
+            btn.textContent = "✅ Message Sent!";
+
+            contactForm.reset();
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }, 2500);
+
+        })
+
+        .catch(function(error) {
+
+            console.error(error);
+
+            btn.textContent = "❌ Failed";
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }, 2500);
+
+        });
+
+    });
+
 }
