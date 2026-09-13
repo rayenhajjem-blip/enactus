@@ -204,13 +204,14 @@ section{ position:relative; }
   .nav-toggle{ display:block; }
   .nav-links{
     position:fixed; inset:66px 0 0 0; background:var(--bg);
-    flex-direction:column; align-items:stretch; padding:18px 24px;
-    gap:2px; transform:translateY(-8px); opacity:0; pointer-events:none;
+    flex-direction:row; align-items:center; flex-wrap:nowrap;
+    overflow-x:auto; padding:18px 24px; gap:2px;
+    transform:translateY(-8px); opacity:0; pointer-events:none;
     transition:opacity .2s ease, transform .2s ease; border-top:1px solid var(--line);
   }
   .nav-links.open{ opacity:1; transform:translateY(0); pointer-events:auto; }
-  .nav-links a{ padding:14px 6px; border-bottom:1px solid var(--line); font-size:1.05rem; }
-  .nav-cta{ margin-left:0; margin-top:10px; }
+  .nav-links a{ padding:14px 8px; border-bottom:0; font-size:1.05rem; white-space:nowrap; }
+  .nav-cta{ margin-left:8px; margin-top:0; }
 }
 
 /* ===========================================================
@@ -326,6 +327,8 @@ section{ position:relative; }
 =========================================================== */
 .section{ padding:96px 0; }
 .section.alt{ background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.mission-layout{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+@media (max-width:760px){ .mission-layout{ grid-template-columns:1fr; } }
 .section-head{ max-width:640px; margin-bottom:56px; }
 .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
 .section-head h2{ font-size:clamp(1.7rem,3vw,2.4rem); }
@@ -342,17 +345,19 @@ section{ position:relative; }
   letter-spacing:.02em;
 }
 .placeholder .ph-icon{ opacity:.6; filter:drop-shadow(0 0 8px var(--glow-orange)); }
+.placeholder .about-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:1; filter:none; }
 .placeholder small{ font-family:var(--body); font-weight:400; font-size:.72rem; color:var(--grey); opacity:.8; }
 
 /* ---------- Stats bar ---------- */
 .stats-bar{
-  display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line);
   background:var(--bg-alt);
 }
 .stats-bar div{ padding:34px 20px; text-align:center; border-left:1px solid var(--line); }
 .stats-bar div:first-child{ border-left:0; }
 .stats-bar strong{ display:block; font-family:var(--mono); font-weight:700; font-size:2.1rem; color:var(--orange); text-shadow:0 0 18px var(--glow-orange); }
 .stats-bar span{ font-size:.8rem; color:var(--grey); }
+@media (max-width:980px){ .stats-bar{ grid-template-columns:repeat(3,1fr); } .stats-bar div:nth-child(3n+1){ border-left:0; } }
 @media (max-width:760px){ .stats-bar{ grid-template-columns:repeat(2,1fr); } .stats-bar div{ border-left:0; border-bottom:1px solid var(--line);} }
 
 /* ---------- Cards (projects/news/team) ---------- */
@@ -376,6 +381,7 @@ section{ position:relative; }
 .card .placeholder{ aspect-ratio:4/3; border:none; border-bottom:1px solid var(--line); overflow:hidden; transition:transform .4s ease; }
 .card:hover .placeholder{ transform:scale(1.035); }
 .card .placeholder img{ transition:transform .4s ease; }
+.card .placeholder .project-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:1; filter:none; }
 .card:hover .placeholder img{ transform:scale(1.08) rotate(-3deg); }
 .card-body{ padding:22px; display:flex; flex-direction:column; gap:10px; flex:1; }
 .card-cat{ font-family:var(--mono); font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--orange); }
@@ -412,6 +418,7 @@ section{ position:relative; }
 .team-card{ text-align:center; border:1px solid var(--line); background:var(--surface); padding:0; overflow:hidden; transition:border-color .2s ease, transform .2s ease; }
 .team-card:hover{ border-color:var(--line-strong); transform:translateY(-4px); }
 .team-card .placeholder{ aspect-ratio:1/1; border:none; }
+.team-card .team-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:1; filter:none; }
 .team-card .info{ padding:18px 14px 24px; }
 .team-card h4{ font-size:1.02rem; margin-bottom:2px; color:var(--text); }
 .team-card span{ display:block; font-family:var(--mono); font-size:.76rem; color:var(--orange); font-weight:700; margin-bottom:10px; }
@@ -514,6 +521,7 @@ section{ position:relative; }
 .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
 @media (max-width:520px){ .form-row{ grid-template-columns:1fr; } }
 .map-placeholder{ aspect-ratio:16/9; margin-top:8px; }
+.map-placeholder iframe{ width:100%; height:100%; border:0; display:block; }
 
 /* ---------- reveal on scroll (stagger delay set via --d by JS) ---------- */
 .reveal{

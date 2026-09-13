@@ -181,7 +181,7 @@ function initTabs(tabSelector, panelSelector) {
     });
   });
 }
-initTabs('.dept-tabs button', '.team-panel');
+initTabs('.dept-tabs button', '.team-panel:not(.board-panel)');
 // ===== EmailJS Contact Form =====
 
 const contactForm = document.getElementById("contact-form");
