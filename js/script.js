@@ -182,6 +182,27 @@ function initTabs(tabSelector, panelSelector) {
   });
 }
 initTabs('.dept-tabs button', '.team-panel:not(.board-panel)');
+
+// ===== Featured event article modal =====
+(function () {
+  const openButton = document.querySelector('#open-event-modal');
+  const modal = document.querySelector('#event-modal');
+  if (!openButton || !modal) return;
+  const closeModal = () => {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  };
+  openButton.addEventListener('click', () => {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  });
+  modal.querySelectorAll('[data-close-event-modal]').forEach((element) => {
+    element.addEventListener('click', closeModal);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !modal.hidden) closeModal();
+  });
+})();
 // ===== EmailJS Contact Form =====
 
 const contactForm = document.getElementById("contact-form");

@@ -297,6 +297,25 @@ section{ position:relative; }
 .fold-card.on-dark{ background:#0A0E17; border-color:var(--line-strong); color:var(--paper); }
 .fold-card.on-dark::before{ background:#111826; border-color:var(--line-strong); }
 .fold-card:hover{ transform:translateY(-6px) rotate(-.4deg); border-color:var(--line-strong); }
+.featured-event{ display:grid; grid-template-columns:1fr 1fr; gap:0; overflow:hidden; padding:0; align-items:start; }
+.featured-event-photo{ border:none; aspect-ratio:4/5; min-height:0; }
+.featured-event-copy{ padding:40px; }
+@media (max-width:760px){
+  .featured-event{ grid-template-columns:1fr; }
+  .featured-event-photo{ aspect-ratio:4/5; }
+  .featured-event-copy{ padding:28px 24px; }
+}
+.event-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:1; filter:none; }
+.event-modal[hidden]{ display:none; }
+.event-modal{ position:fixed; inset:0; z-index:1100; display:grid; place-items:center; padding:24px; }
+.event-modal-backdrop{ position:absolute; inset:0; background:rgba(5,7,11,.78); backdrop-filter:blur(8px); }
+.event-modal-dialog{ position:relative; z-index:1; width:min(760px,100%); max-height:min(88vh,760px); overflow:auto; background:var(--surface); border:1px solid var(--line-strong); box-shadow:0 24px 80px rgba(0,0,0,.65); }
+.event-modal-photo{ display:block; width:100%; max-height:320px; object-fit:contain; }
+.event-modal-content{ padding:28px; }
+.event-modal-content h2{ margin:10px 0 16px; font-size:clamp(1.45rem,3vw,2rem); }
+.event-modal-content p{ color:var(--grey); margin:0 0 14px; }
+.event-modal-close{ position:absolute; top:12px; right:12px; z-index:2; width:36px; height:36px; border:1px solid var(--line-strong); background:rgba(5,7,11,.72); color:var(--text); font-size:1.5rem; line-height:1; cursor:pointer; }
+.event-modal-close:hover{ color:var(--yellow); border-color:var(--yellow); }
 .pillar.people:hover{ box-shadow:0 20px 44px -14px var(--glow-blue); border-color:var(--blue); }
 .pillar.people:hover::before{ background:var(--blue); opacity:.3; }
 .pillar.planet:hover{ box-shadow:0 20px 44px -14px var(--glow-green); border-color:var(--green); }

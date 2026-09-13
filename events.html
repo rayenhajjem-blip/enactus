@@ -43,16 +43,17 @@
 <!-- FEATURED EVENT -->
 <section class="section">
   <div class="container">
-    <div class="fold-card reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:0; overflow:hidden; padding:0;">
-      <div class="placeholder" style="border:none; aspect-ratio:auto; min-height:320px;">
-        <img class="ph-icon" src="assets/bird-flat.png" alt="">
-        <span>Event photo to be added</span>
+    <div class="fold-card featured-event reveal">
+      <div class="placeholder featured-event-photo">
+        <img class="event-photo" src="assets/currentevent.jpg" alt="Team building event">
       </div>
-      <div style="padding:40px;">
+      <div class="featured-event-copy">
         <span class="card-cat">Featured</span>
-        <h2 style="margin:12px 0 14px; font-size:1.6rem;">Main event title</h2>
-        <p style="color:var(--grey); margin-bottom:18px;">Event description: date, location, and goals. This block highlights the club's most important current news.</p>
-        <a href="#" class="btn btn-ghost">Read the article</a>
+        <h2 style="margin:12px 0 14px; font-size:1.6rem;">Team building</h2>
+        <p style="color:var(--grey); margin-bottom:18px;">More than a team, we’re a whole vibe: 18th of september, Fun Lac sfax, building teams . Ready to connect, compete, laugh & make memories? 👀🔥
+
+It’s time to step out of the usual, get closer, and build something stronger together. 🤝💛</p>
+        <button type="button" class="btn btn-ghost" id="open-event-modal">Read the article</button>
       </div>
     </div>
   </div>
@@ -71,7 +72,7 @@
         <div class="card-body">
           <span class="card-cat">Workshop</span>
           <h3>Article title 1</h3>
-          <p>Short summary of the article or past event, with date and location.</p>
+          <p>summary</p>
           <a href="#" class="card-link">Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
         </div>
       </article>
@@ -80,7 +81,7 @@
         <div class="card-body">
           <span class="card-cat">Competition</span>
           <h3>Article title 2</h3>
-          <p>Short summary of the article or past event, with date and location.</p>
+          <p>summary</p>
           <a href="#" class="card-link">Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
         </div>
       </article>
@@ -89,7 +90,7 @@
         <div class="card-body">
           <span class="card-cat">Recruitment</span>
           <h3>Article title 3</h3>
-          <p>Short summary of the article or past event, with date and location.</p>
+          <p>summary</p>
           <a href="#" class="card-link">Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
         </div>
       </article>
@@ -98,7 +99,7 @@
         <div class="card-body">
           <span class="card-cat">Fieldwork</span>
           <h3>Article title 4</h3>
-          <p>Short summary of the article or past event, with date and location.</p>
+          <p>summary</p>
           <a href="#" class="card-link">Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
         </div>
       </article>
@@ -107,7 +108,7 @@
         <div class="card-body">
           <span class="card-cat">Partnership</span>
           <h3>Article title 5</h3>
-          <p>Short summary of the article or past event, with date and location.</p>
+          <p>summary</p>
           <a href="#" class="card-link">Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
         </div>
       </article>
@@ -116,13 +117,30 @@
         <div class="card-body">
           <span class="card-cat">Workshop</span>
           <h3>Article title 6</h3>
-          <p>Short summary of the article or past event, with date and location.</p>
+          <p>summary</p>
           <a href="#" class="card-link">Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
         </div>
       </article>
     </div>
   </div>
 </section>
+
+<div class="event-modal" id="event-modal" hidden>
+  <div class="event-modal-backdrop" data-close-event-modal></div>
+  <article class="event-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="event-modal-title">
+    <button type="button" class="event-modal-close" aria-label="Close article" data-close-event-modal>&times;</button>
+    <img class="event-modal-photo" src="assets/currentevent.jpg" alt="Team building event">
+    <div class="event-modal-content">
+      <span class="card-cat">Team building</span>
+      <h2 id="event-modal-title">More than a team, we’re a whole vibe.</h2>
+      <p>Ready to connect, compete, laugh &amp; make memories? 👀🔥</p>
+      <p>It’s time to step out of the usual, get closer, and build something stronger together. 🤝💛</p>
+      <p>🎯 One team.<br>⚡ One energy.<br>🚀 One unforgettable day.</p>
+      <p>Let’s make it count. 🫶</p>
+      <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdbTj7mCfzSMLcIhOjNxZmxuR8QTIV6ykktuUo8duFdHSOQxg/viewform?fbzx=-7877595811263191652" target="_blank" rel="noopener">🎟️ Book your ticket now!</a>
+    </div>
+  </article>
+</div>
 
 <section class="cta-banner">
   <div class="container">
