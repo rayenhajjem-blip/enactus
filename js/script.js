@@ -182,6 +182,73 @@ function initTabs(tabSelector, panelSelector) {
   });
 }
 initTabs('.dept-tabs button', '.team-panel:not(.board-panel)');
+initTabs('.gen-rail button', '.gen-panel');
+
+// ===== Mouse-wheel scrolling for the generation rail =====
+(function () {
+  const rail = document.querySelector('.gen-rail');
+  if (!rail) return;
+  rail.addEventListener('wheel', (event) => {
+    if (rail.scrollWidth <= rail.clientWidth) return;
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+    event.preventDefault();
+    rail.scrollLeft += event.deltaY;
+  }, { passive: false });
+
+  const scrollAmount = () => Math.max(rail.clientWidth * 0.7, 180);
+  document.querySelector('.gen-scroll-left')?.addEventListener('click', () => {
+    rail.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+  });
+  document.querySelector('.gen-scroll-right')?.addEventListener('click', () => {
+    rail.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+  });
+})();
+
+// ===== Hall of fame expansion =====
+(function () {
+  const toggle = document.querySelector('.achievements-toggle');
+  const grid = document.querySelector('.trophy-grid');
+  if (!toggle || !grid) return;
+  toggle.addEventListener('click', () => {
+    const expanded = grid.classList.toggle('is-expanded');
+    toggle.setAttribute('aria-expanded', String(expanded));
+    toggle.textContent = expanded ? 'Show fewer achievements' : 'Show more achievements';
+  });
+})();
+
+// ===== Global team image viewer =====
+(function () {
+  const viewer = document.querySelector('#image-viewer');
+  const viewerImage = document.querySelector('#image-viewer-image');
+  const viewerCaption = document.querySelector('#image-viewer-caption');
+  if (!viewer || !viewerImage || !viewerCaption) return;
+
+  const closeViewer = () => {
+    viewer.hidden = true;
+    viewerImage.src = '';
+    document.body.style.overflow = '';
+  };
+
+  document.querySelectorAll('.gen-panel .media-item[data-caption^="Global team showcase"]').forEach((card) => {
+    card.addEventListener('click', () => {
+      const source = card.dataset.src;
+      if (!source) return;
+      viewerImage.src = source;
+      viewerImage.alt = card.querySelector('img')?.alt || card.dataset.caption;
+      viewerCaption.textContent = card.dataset.caption;
+      viewer.hidden = false;
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  viewer.querySelector('.image-viewer-close').addEventListener('click', closeViewer);
+  viewer.addEventListener('click', (event) => {
+    if (event.target === viewer) closeViewer();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !viewer.hidden) closeViewer();
+  });
+})();
 
 // ===== Event article modals =====
 (function () {
