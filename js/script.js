@@ -183,18 +183,58 @@ function initTabs(tabSelector, panelSelector) {
 }
 initTabs('.dept-tabs button', '.team-panel:not(.board-panel)');
 
-// ===== Featured event article modal =====
+// ===== Event article modals =====
 (function () {
   const openButton = document.querySelector('#open-event-modal');
   const modal = document.querySelector('#event-modal');
   if (!openButton || !modal) return;
+  const modalCategory = modal.querySelector('.card-cat');
+  const modalTitle = modal.querySelector('#event-modal-title');
+  const modalPhoto = modal.querySelector('.event-modal-photo');
+  const modalDetails = modal.querySelector('.event-modal-details');
+  const modalAction = modal.querySelector('.event-modal-action');
+  const featuredCategory = modalCategory.textContent;
+  const featuredTitle = modalTitle.textContent;
+  const featuredPhoto = modalPhoto.src;
+  const featuredPhotoAlt = modalPhoto.alt;
+  const featuredDetails = modalDetails.innerHTML;
+
+  const openModal = (source) => {
+    const card = source.closest('.card');
+    if (card) {
+      modalCategory.textContent = card.querySelector('.card-cat').textContent;
+      modalTitle.textContent = card.querySelector('h3').textContent;
+      modalPhoto.src = card.querySelector('img').src;
+      modalPhoto.alt = card.querySelector('h3').textContent;
+      modalDetails.innerHTML = `<p>${card.dataset.eventDetail || card.querySelector('p').textContent}</p>`;
+      modalAction.hidden = !card.dataset.eventActionUrl;
+      if (card.dataset.eventActionUrl) {
+        modalAction.textContent = card.dataset.eventActionLabel || 'Learn more';
+        modalAction.href = card.dataset.eventActionUrl;
+      }
+    } else {
+      modalCategory.textContent = featuredCategory;
+      modalTitle.textContent = featuredTitle;
+      modalPhoto.src = featuredPhoto;
+      modalPhoto.alt = featuredPhotoAlt;
+      modalAction.hidden = false;
+      modalAction.href = 'https://docs.google.com/forms/d/e/1FAIpQLSdbTj7mCfzSMLcIhOjNxZmxuR8QTIV6ykktuUo8duFdHSOQxg/viewform?fbzx=-7877595811263191652';
+      modalAction.textContent = '🎟️ Book your ticket now!';
+      modalDetails.innerHTML = featuredDetails;
+    }
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  };
   const closeModal = () => {
     modal.hidden = true;
     document.body.style.overflow = '';
   };
-  openButton.addEventListener('click', () => {
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
+  openButton.addEventListener('click', () => openModal(openButton));
+  document.querySelectorAll('.card-link').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      openModal(link);
+    });
   });
   modal.querySelectorAll('[data-close-event-modal]').forEach((element) => {
     element.addEventListener('click', closeModal);
@@ -219,7 +259,7 @@ if (contactForm) {
         btn.disabled = true;
         btn.textContent = "Sending...";
 
-        emailjs.send("service_vuy642u", "template_39u6cu9", {
+        emailjs.send("service_yesvt3n", "template_qct1j15", {
 
             first_name: document.getElementById("fname").value,
 
