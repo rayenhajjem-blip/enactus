@@ -679,6 +679,19 @@ section{ position:relative; }
   position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
   gap:8px; text-align:center; padding:14px; color:var(--grey);
 }
+
+#gen-2024 .media-item,
+#gen-2024 .media-item:hover,
+#gen-2024 .media-item img,
+#gen-2024 .media-video-card video.media-video,
+#gen-2024 .media-item .play-badge{
+  box-shadow:none;
+}
+#gen-2024 .media-item:hover{ transform:none; border-color:var(--line); }
+#gen-2024 .media-item img,
+#gen-2024 .media-video-card video.media-video{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
 .media-item .media-empty img{ width:30px; height:auto; opacity:.5; filter:drop-shadow(0 0 8px var(--glow-orange)); }
 .media-item .media-empty span{ font-size:.72rem; font-family:var(--mono); }
 .media-item .media-label{
@@ -739,6 +752,10 @@ section{ position:relative; }
   font-family:var(--display); font-size:4rem; color:var(--line-strong); line-height:1;
 }
 .alumni-card p{ color:var(--ink-soft); font-size:.95rem; font-style:italic; }
+.alumni-card .arabic-quote{
+  direction:rtl; text-align:right; unicode-bidi:plaintext; font-style:normal; line-height:1.9;
+  font-size:1rem; letter-spacing:.01em;
+}
 .alumni-who{ display:flex; align-items:center; gap:12px; margin-top:20px; }
 .alumni-who .avatar{
   width:64px; height:64px; flex:0 0 64px; border-radius:50%; overflow:hidden;
