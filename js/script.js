@@ -1,6 +1,47 @@
 // ===== Respect reduced-motion preference =====
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// ===== Animated bird cursor =====
+(function () {
+  if (prefersReducedMotion || !window.matchMedia('(pointer:fine)').matches) return;
+  const cursor = document.createElement('div');
+  cursor.className = 'animated-cursor';
+  cursor.setAttribute('aria-hidden', 'true');
+  cursor.innerHTML = '<img src="assets/birdlogo-cursor.png" alt="">';
+  document.body.appendChild(cursor);
+
+  let frame = 0;
+  let x = 0;
+  let y = 0;
+  const setActive = (active) => {
+    document.body.classList.toggle('show-animated-cursor', active);
+    cursor.classList.toggle('is-visible', active);
+  };
+  document.addEventListener('mousemove', (event) => {
+    x = event.clientX;
+    y = event.clientY;
+    if (!frame) {
+      frame = requestAnimationFrame(() => {
+        cursor.style.left = `${x}px`;
+        cursor.style.top = `${y}px`;
+        frame = 0;
+      });
+    }
+  }, { passive: true });
+  document.addEventListener('pointerover', (event) => {
+    const interactive = event.target.closest('.card, .team-card, .alumni-card, button');
+    if (interactive) setActive(true);
+  });
+  document.addEventListener('pointerout', (event) => {
+    const interactive = event.target.closest('.card, .team-card, .alumni-card, button');
+    const nextInteractive = event.relatedTarget instanceof Element
+      ? event.relatedTarget.closest('.card, .team-card, .alumni-card, button')
+      : null;
+    if (interactive && interactive !== nextInteractive) setActive(false);
+  });
+  document.addEventListener('mouseleave', () => setActive(false));
+})();
+
 // ===== Scroll progress bar =====
 (function () {
   const bar = document.createElement('div');
@@ -173,6 +214,7 @@ function initTabs(tabSelector, panelSelector) {
   const panels = document.querySelectorAll(panelSelector);
   if (!tabs.length) return;
   tabs.forEach(tab => {
+    if (tab.disabled) return;
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
       panels.forEach(p => p.classList.remove('active'));
@@ -269,15 +311,16 @@ initTabs('.gen-rail button', '.gen-panel');
   const openModal = (source) => {
     const card = source.closest('.card');
     if (card) {
+      const eventActionUrl = card.dataset.eventActionUrl;
       modalCategory.textContent = card.querySelector('.card-cat').textContent;
       modalTitle.textContent = card.querySelector('h3').textContent;
-      modalPhoto.src = card.querySelector('img').src;
-      modalPhoto.alt = card.querySelector('h3').textContent;
+      modalPhoto.src = eventActionUrl ? card.querySelector('img').src : 'assets/birdlogo.png';
+      modalPhoto.alt = eventActionUrl ? card.querySelector('h3').textContent : 'Enactus ENET’com';
       modalDetails.innerHTML = `<p>${card.dataset.eventDetail || card.querySelector('p').textContent}</p>`;
-      modalAction.hidden = !card.dataset.eventActionUrl;
-      if (card.dataset.eventActionUrl) {
+      modalAction.hidden = !eventActionUrl;
+      if (eventActionUrl) {
         modalAction.textContent = card.dataset.eventActionLabel || 'Learn more';
-        modalAction.href = card.dataset.eventActionUrl;
+        modalAction.href = eventActionUrl;
       }
     } else {
       modalCategory.textContent = featuredCategory;
@@ -285,8 +328,8 @@ initTabs('.gen-rail button', '.gen-panel');
       modalPhoto.src = featuredPhoto;
       modalPhoto.alt = featuredPhotoAlt;
       modalAction.hidden = false;
-      modalAction.href = 'https://docs.google.com/forms/d/e/1FAIpQLSdbTj7mCfzSMLcIhOjNxZmxuR8QTIV6ykktuUo8duFdHSOQxg/viewform?fbzx=-7877595811263191652';
-      modalAction.textContent = '🎟️ Book your ticket now!';
+      modalAction.href = 'https://docs.google.com/forms/d/e/1FAIpQLScJ8QoQlRyZf1b0CI-XTBsQMM8wDdGDAWmRCfLM9GF5YRqsVQ/viewform';
+      modalAction.textContent = 'Take a seat';
       modalDetails.innerHTML = featuredDetails;
     }
     modal.hidden = false;

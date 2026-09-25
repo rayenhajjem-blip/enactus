@@ -56,12 +56,39 @@ body{
   line-height:1.55;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
-  cursor:url("../assets/cursor-bird.png") 20 20, auto;
+  cursor:auto;
 }
 a, button, .btn, input, select, textarea, .dept-tabs button, .filters button{
-  cursor:url("../assets/cursor-bird@2x.png") 20 20, pointer;
+  cursor:pointer;
 }
-input, select, textarea{ cursor:url("../assets/cursor-bird.png") 20 20, text; }
+input, select, textarea{ cursor:text; }
+
+.animated-cursor{
+  position:fixed; top:0; left:0; width:32px; height:32px;
+  pointer-events:none; z-index:2000; opacity:0;
+  transform:translate(-50%, -50%);
+  transition:opacity .15s ease;
+  will-change:transform;
+}
+.animated-cursor.is-visible{ opacity:1; }
+body.show-animated-cursor,
+body.show-animated-cursor a,
+body.show-animated-cursor button,
+body.show-animated-cursor .btn,
+body.show-animated-cursor .card,
+body.show-animated-cursor .team-card,
+body.show-animated-cursor .alumni-card{
+  cursor:none;
+}
+.animated-cursor img{
+  width:100%; height:100%; display:block;
+  animation:cursor-spin 2.4s linear infinite;
+}
+@keyframes cursor-spin{ to{ transform:rotate(360deg); } }
+@media (pointer:coarse), (prefers-reduced-motion:reduce){
+  body, a, button, .btn, input, select, textarea, .dept-tabs button, .filters button{ cursor:auto; }
+  .animated-cursor{ display:none; }
+}
 
 /* ---------- techy grid backdrop (fixed, whole page) ---------- */
 body::before{
@@ -379,6 +406,13 @@ section{ position:relative; }
 @media (max-width:980px){ .stats-bar{ grid-template-columns:repeat(3,1fr); } .stats-bar div:nth-child(3n+1){ border-left:0; } }
 @media (max-width:760px){ .stats-bar{ grid-template-columns:repeat(2,1fr); } .stats-bar div{ border-left:0; border-bottom:1px solid var(--line);} }
 
+/* ---------- Homepage video ---------- */
+.home-video-placeholder{
+  width:100%; aspect-ratio:16/9; padding:0; overflow:hidden;
+  border-style:solid; border-color:var(--line-strong);
+}
+.home-video{ width:100%; height:100%; display:block; object-fit:cover; }
+
 /* ---------- Cards (projects/news/team) ---------- */
 .card-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
 @media (max-width:980px){ .card-grid{ grid-template-columns:repeat(2,1fr); } }
@@ -639,6 +673,8 @@ section{ position:relative; }
   transform:scaleX(0); transition:transform .3s ease;
 }
 .gen-rail button:hover{ background:var(--surface); }
+.gen-rail button:disabled{ cursor:not-allowed; opacity:.35; }
+.gen-rail button:disabled:hover{ background:transparent; }
 .gen-rail button.active{ background:var(--surface); }
 .gen-rail button.active strong{ color:var(--yellow); }
 .gen-rail button.active::after{ transform:scaleX(1); }
